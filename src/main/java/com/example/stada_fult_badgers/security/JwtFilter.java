@@ -1,0 +1,59 @@
+package com.example.stada_fult_badgers.security;
+
+import com.example.stada_fult_badgers.service.JwtUtil;
+import io.jsonwebtoken.Claims;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Service;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Service
+public class JwtFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+
+    public JwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String authHeader = request.getHeader("Authorization");
+
+        if(authHeader != null){
+            String token = authHeader.substring(7);
+            Claims body = jwtUtil.parseClaims(token);
+            String appUserName = body.getSubject();
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(appUserName);
+
+            //Bara gör Viktor säger man får on i huvudet
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
+
+            //Bara gör Viktor säger man får on i huvudet
+            usernamePasswordAuthenticationToken.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request));
+
+            //Loggar in användaren
+            SecurityContextHolder
+                    .getContext()
+                    .setAuthentication(usernamePasswordAuthenticationToken);
+        }
+
+        filterChain.doFilter(request, response);
+
+    }
+}
