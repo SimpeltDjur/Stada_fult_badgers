@@ -46,7 +46,7 @@ public class Booking {
 
 
     public BookingResponseDTO toBookingResponseDTO() {
-        return new BookingResponseDTO(id, appUser.getAppUserName(), status, date, time, done, accepted);
+        return new BookingResponseDTO(id, appUser.getAppUserName(), status, date, time, accepted);
     }
 
     public String getStatus() {

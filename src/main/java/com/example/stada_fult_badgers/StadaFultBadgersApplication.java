@@ -40,7 +40,9 @@ public class StadaFultBadgersApplication implements CommandLineRunner {
 					new AppUser("Bengt", "Toreboda", passwordEncoder.encode("1234"), Set.of(Role.CLEANER))
 					));
 			bookingRepo.saveAll(List.of(
-					new Booking(appUser1, "2022/11/15", "12:00")
+					new Booking(appUser1, "2022/11/15", "12:00"),
+					new Booking(appUser1, "2022/11/16", "13:00"),
+					new Booking(appUser1, "2022/11/17", "15:00")
 			));
 
 
