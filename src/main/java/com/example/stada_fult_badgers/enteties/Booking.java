@@ -22,9 +22,6 @@ public class Booking {
     @Column
     private Boolean done;
 
-    @Column
-    private Boolean accepted;
-
     @ManyToOne
     //@JoinColumn()
     private AppUser appUser;
@@ -40,13 +37,12 @@ public class Booking {
         this.time = time;
         this.status = "Obekräftad";
         this.done = false;
-        this.accepted = false;
     }
 
 
 
     public BookingResponseDTO toBookingResponseDTO() {
-        return new BookingResponseDTO(id, appUser.getAppUserName(), status, date, time, accepted);
+        return new BookingResponseDTO(id, appUser.getAppUserName(), status, date, time);
     }
 
     public String getStatus() {
@@ -79,14 +75,6 @@ public class Booking {
 
     public void setDone(Boolean done) {
         this.done = done;
-    }
-
-    public Boolean getAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
     }
 
     public int getId() {

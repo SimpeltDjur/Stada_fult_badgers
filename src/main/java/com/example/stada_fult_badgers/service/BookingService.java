@@ -22,4 +22,10 @@ public class BookingService {
                 .map(Booking::toBookingResponseDTO)
                 .toList();
     }
+
+    public void approveCleaning(int id) {
+        Booking booking = bookingRepo.findById(id).orElseThrow();
+        booking.setStatus("Rent och fint");
+        bookingRepo.save(booking);
+    }
 }

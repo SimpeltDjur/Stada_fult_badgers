@@ -5,5 +5,5 @@ public record BookingResponseDTO(
         String appUserName,
         String status,
         String date,
-        String time,
-        Boolean accepted) { }
+        String time
+) { }
