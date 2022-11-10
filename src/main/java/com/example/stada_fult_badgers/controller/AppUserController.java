@@ -1,10 +1,9 @@
 package com.example.stada_fult_badgers.controller;
 
+import com.example.stada_fult_badgers.dto.AppUserResponseDTO;
+import com.example.stada_fult_badgers.dto.CreateUserDTO;
 import com.example.stada_fult_badgers.service.AppUserService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -16,6 +15,13 @@ public class AppUserController {
 
     public AppUserController(AppUserService appUserService) {
         this.appUserService = appUserService;
+    }
+
+    @PostMapping("/new")
+    public void createNewUser(@RequestBody CreateUserDTO createUserDTO) {
+        System.out.println("Hello controller 1.");
+        appUserService.createNewUser(createUserDTO);
+        System.out.println("Hello controller 2.");
     }
 
 }

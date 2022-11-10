@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/auth/**").permitAll() //.hasRole(Role.CLEANER.toString())
+                        .antMatchers("/user/new/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
