@@ -19,9 +19,7 @@ public class AppUserController {
 
     @PostMapping("/new")
     public void createNewUser(@RequestBody CreateUserDTO createUserDTO) {
-        System.out.println("Hello controller 1.");
         appUserService.createNewUser(createUserDTO);
-        System.out.println("Hello controller 2.");
     }
 
 }

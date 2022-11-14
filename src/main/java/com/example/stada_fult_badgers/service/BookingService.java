@@ -25,7 +25,13 @@ public class BookingService {
 
     public void approveCleaning(int id) {
         Booking booking = bookingRepo.findById(id).orElseThrow();
-        booking.setStatus("Rent och fint");
+        booking.setStatus("Godkänd");
+        bookingRepo.save(booking);
+    }
+
+    public void cancelCleaning(int id) {
+        Booking booking = bookingRepo.findById(id).orElseThrow();
+        booking.setStatus("Avbokad");
         bookingRepo.save(booking);
     }
 }

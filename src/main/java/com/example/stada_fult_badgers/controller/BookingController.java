@@ -28,5 +28,10 @@ public class BookingController {
         bookingService.approveCleaning(id);
     }
 
+    @PutMapping("/cancel/{id}")
+    public void  cancelCleaning(@PathVariable("id") int id) {
+        bookingService.cancelCleaning(id);
+    }
+
 
 }

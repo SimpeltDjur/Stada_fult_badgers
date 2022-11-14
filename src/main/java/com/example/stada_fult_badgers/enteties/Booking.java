@@ -28,6 +28,7 @@ public class Booking {
 
 
 
+
     public Booking() {
     }
 
@@ -38,6 +39,7 @@ public class Booking {
         this.status = "Obekräftad";
         this.done = false;
     }
+
 
 
 

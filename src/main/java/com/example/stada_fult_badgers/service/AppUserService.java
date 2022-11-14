@@ -26,7 +26,6 @@ public class AppUserService {
                 createUserDTO.address(),
                 passwordEncoder.encode(createUserDTO.password()),
                 Set.of(Role.CUSTOMER));
-        System.out.println("Hello AppUserService!");
         appUserRepo.save(newUser);
     }
 }
