@@ -22,4 +22,6 @@ public class AppUserController {
         appUserService.createNewUser(createUserDTO);
     }
 
+
+
 }

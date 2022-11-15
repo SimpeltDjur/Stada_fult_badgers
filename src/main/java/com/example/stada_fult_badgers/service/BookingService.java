@@ -6,6 +6,8 @@ import com.example.stada_fult_badgers.enteties.AppUser;
 import com.example.stada_fult_badgers.enteties.Booking;
 import com.example.stada_fult_badgers.repo.AppUserRepo;
 import com.example.stada_fult_badgers.repo.BookingRepo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,7 +42,7 @@ public class BookingService {
         bookingRepo.save(booking);
     }
 
-    public void createBookingDTO(CreateBookingDTO createBookingDTO) {
+    public ResponseEntity<String> createBookingDTO(CreateBookingDTO createBookingDTO) {
         String message = createBookingDTO.message();
         int appUserId = createBookingDTO.appuserId();
         String date = createBookingDTO.date();
@@ -48,7 +50,39 @@ public class BookingService {
 
         AppUser appUser = appUserRepo.findById(appUserId).orElseThrow();
         Booking booking = new Booking(appUser, date, time);
-        bookingRepo.save(booking);
+
+        List<Booking> bookingList = bookingRepo.findAll();
+        boolean isPressent = false;
+        for(Booking b : bookingList){
+            if (b.getAppUser().equals(appUser) && b.getDate().equals(date)){
+                isPressent = true;
+                break;
+            }
+        }
+        if (!isPressent){
+            bookingRepo.save(booking);
+            return new ResponseEntity<>("Det gick bra", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Du har redan en bokning den dagen", HttpStatus.BAD_REQUEST);
+        }
+
+
 
     }
+
+    public List<BookingResponseDTO> getUnclaimedBookings() {
+        List<BookingResponseDTO> list =
+                bookingRepo.findAll().stream()
+                        .filter(booking -> booking.getStatus().equals("Obekräftad"))
+                        .map(booking -> booking.toBookingResponseDTO())
+                        .toList();
+        return list;
+    }
+
+    public void claimBooking(int id) {
+        Booking booking = bookingRepo.findById(id).orElseThrow();
+        booking.setStatus("Bekräftad");
+        bookingRepo.save(booking);
+    }
 }
+

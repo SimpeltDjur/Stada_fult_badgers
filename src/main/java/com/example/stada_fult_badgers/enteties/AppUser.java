@@ -53,6 +53,10 @@ public class AppUser implements UserDetails {
 
 
 
+    public boolean isCleaner(){
+        return roles.contains(Role.CLEANER);
+    }
+
     public AppUserResponseDTO toAppUserResponseDTO() {
         List<BookingResponseDTO> bookingResponseDTOList =
                 bookings.stream().map(c -> c.toBookingResponseDTO()).toList();

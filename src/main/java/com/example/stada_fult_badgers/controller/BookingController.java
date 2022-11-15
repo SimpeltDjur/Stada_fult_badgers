@@ -3,6 +3,7 @@ package com.example.stada_fult_badgers.controller;
 import com.example.stada_fult_badgers.dto.BookingResponseDTO;
 import com.example.stada_fult_badgers.dto.CreateBookingDTO;
 import com.example.stada_fult_badgers.service.BookingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,8 +36,17 @@ public class BookingController {
     }
 
     @PostMapping("/newbooking")
-    public void createBooking(@RequestBody CreateBookingDTO createBookingDTO){
-        bookingService.createBookingDTO(createBookingDTO);
+    public ResponseEntity<String> createBooking(@RequestBody CreateBookingDTO createBookingDTO){
+        return bookingService.createBookingDTO(createBookingDTO);
+    }
+
+    @GetMapping("/unclaimed")
+    public List<BookingResponseDTO> getUnclaimedBookings(){
+        return bookingService.getUnclaimedBookings();
+    }
+    @PutMapping("/claim/{id}")
+    public void claimBooking(@PathVariable("id") int id){
+        bookingService.claimBooking(id);
     }
 
 }

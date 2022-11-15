@@ -1,5 +1,6 @@
 package com.example.stada_fult_badgers.security;
 
+import com.example.stada_fult_badgers.enteties.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -38,6 +39,7 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/auth/**").permitAll() //.hasRole(Role.CLEANER.toString())
                         .antMatchers("/user/new/**").permitAll()
+                        .antMatchers("/bookings/unclaimed/**").hasRole(Role.CLEANER.toString()) //den kritiska raden
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)

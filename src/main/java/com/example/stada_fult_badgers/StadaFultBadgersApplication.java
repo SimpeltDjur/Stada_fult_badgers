@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.awt.print.Book;
 import java.util.List;
 import java.util.Set;
 
@@ -34,15 +35,26 @@ public class StadaFultBadgersApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		try {
+
 			AppUser appUser1 = new AppUser("Agda", "Stckholm", passwordEncoder.encode("pass"), Set.of(Role.CUSTOMER) );
+			AppUser appUser2 = new AppUser("Bengt", "Toreboda", passwordEncoder.encode("1234"), Set.of(Role.CUSTOMER));
+			AppUser appUser3 = new AppUser("Viktor", "Grönköping", passwordEncoder.encode("gunnar"),Set.of(Role.CLEANER));
+
 			appUserRepo.saveAll(List.of(
 					appUser1,
-					new AppUser("Bengt", "Toreboda", passwordEncoder.encode("1234"), Set.of(Role.CLEANER))
+					appUser2,
+					appUser3
 					));
+
+			Booking booking1 = new Booking(appUser1, "2022/11/15", "12:00");
+			Booking booking2 = new Booking(appUser1, "2022/11/16", "13:00");
+			Booking booking3 = new Booking(appUser1, "2022/11/17", "15:00");
+			booking3.setStatus("Utförd");
+
 			bookingRepo.saveAll(List.of(
-					new Booking(appUser1, "2022/11/15", "12:00"),
-					new Booking(appUser1, "2022/11/16", "13:00"),
-					new Booking(appUser1, "2022/11/17", "15:00")
+					booking1,
+					booking2,
+					booking3
 			));
 
 
