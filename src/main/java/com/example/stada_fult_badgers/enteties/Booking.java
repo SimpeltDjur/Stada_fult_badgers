@@ -27,8 +27,6 @@ public class Booking {
     private AppUser appUser;
 
 
-
-
     public Booking() {
     }
 
@@ -39,9 +37,6 @@ public class Booking {
         this.status = "Obekräftad";
         this.done = false;
     }
-
-
-
 
     public BookingResponseDTO toBookingResponseDTO() {
         return new BookingResponseDTO(id, appUser.getAppUserName(), status, date, time);
