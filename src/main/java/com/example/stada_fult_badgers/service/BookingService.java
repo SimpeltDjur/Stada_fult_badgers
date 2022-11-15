@@ -49,5 +49,6 @@ public class BookingService {
         AppUser appUser = appUserRepo.findById(appUserId).orElseThrow();
         Booking booking = new Booking(appUser, date, time);
         bookingRepo.save(booking);
+
     }
 }
